@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evinced Screenreader Test Site</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="https://iili.io/KUhLHYb.md.png" alt="Evinced Logo - Screenreader Testing Site" class="logo-img">
+            </div>
+            <ul class="nav-links" role="menubar" aria-label="Site navigation menu">
+                <li role="none"><a href="#main" aria-current="page" tabindex="1" role="menuitem" aria-label="Navigate to main page content">Main Page</a></li>
+                <li role="none"><a href="#redundant1" tabindex="2" role="menuitem" aria-label="Navigate to redundant page 1">Redundant Page 1</a></li>
+                <li role="none"><a href="#confusing" tabindex="4" role="menuitem" aria-label="Navigate to confusing page section">This is here just to confuse you</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main" role="main">
+        <!-- Header Section -->
+        <header role="banner" aria-label="Main page header with title and instructions" tabindex="0" id="main-header">
+            <h1 aria-label="Main page title: TEST YOUR SCREENREADER MIGHT" tabindex="0" id="main-title">TEST YOUR SCREENREADER MIGHT</h1>
+            <p class="subheading" role="text" aria-label="Page instructions: Try and navigate through this page to the input modal and fill out the form. See if you can identify some of the accessibility issues on this page for bonus points" tabindex="0" id="main-subheading">Try and navigate through this page to the input modal and fill out the form<br>See if you can identify some of the accessibility issues on this page for bonus points</p>
+        </header>
+
+        <!-- Media Section -->
+        <section class="media-section" aria-label="Pokemon images demonstrating alt text examples">
+            <h2 tabindex="0" id="media-heading">Examples of good and bad alt text</h2>
+            <div class="pokemon-gallery" role="img" aria-label="Gallery of Pokemon images showing different alt text implementations">
+                <div class="pokemon-card" role="img" aria-label="Pikachu looking left with a quizzical expression" tabindex="0">
+                    
+                </div>
+                <div class="pokemon-card" role="img" aria-label="Charizard" tabindex="0">
+                    
+                </div>
+                <div class="pokemon-card" role="img" aria-label="Image" tabindex="0">
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- Tablist Section -->
+        <section class="tablist-section" aria-label="Interactive information tabs">
+            <h2 tabindex="0" id="tablist-heading">Information Tabs</h2>
+            <div class="tablist-container">
+                <div role="tablist" aria-label="Information tabs with educational content">
+                    <button role="tab" aria-selected="true" aria-controls="tabpanel-1" id="tab-1" class="tab-button active" aria-label="Tab 1: Screen readers are tricky right? - Educational content about accessibility">
+                        Screen readers are tricky right?
+                    </button>
+                    <button role="tab" aria-selected="false" aria-controls="tabpanel-2" id="tab-2" class="tab-button" aria-label="Tab 2: Ooh this looks interesting - Contains unexpected content">
+                        Ooh this looks interesting
+                    </button>
+                    <button role="tab" aria-selected="false" aria-controls="tabpanel-3" id="tab-3" class="tab-button" aria-label="Tab 3: Check this out - Form submissions table">
+                        Check this out
+                    </button>
+                </div>
+                
+                <div role="tabpanel" id="tabpanel-1" aria-labelledby="tab-1" class="tab-content active" aria-label="Educational content about accessibility importance">
+                    <h3 tabindex="0" id="tab1-heading">How are you getting on?</h3>
+                    <p role="text" tabindex="0" aria-label="Educational question about accessibility: Can you begin to understand how important correct page layout, content and context information, and correct navigational information is?">Can you begin to understand how important correct page layout, content and context information, and correct navigational information is?</p><br>
+                    <p role="text" tabindex="0" aria-label="Context about accessibility challenges: This is just a simple site, imagine the user experience for complex sites with multiple pages, where issues crop up all over the place">This is just a simple site, imagine the user experience for complex sites with multiple pages, where issues crop up all over the place</p>
+                </div>
+                
+                <div role="tabpanel" id="tabpanel-2" aria-labelledby="tab-2" class="tab-content" aria-label="Unexpected content - Rick Astley lyrics">
+                    <div class="lyrics" role="text" tabindex="0" aria-label="Complete lyrics to Never Gonna Give You Up by Rick Astley - unexpected content for accessibility testing">
+                        <p>We're no strangers to love<br>
+                        You know the rules and so do I<br>
+                        A full commitment's what I'm thinking of<br>
+                        You wouldn't get this from any other guy</p>
+                        
+                        <p>I just wanna tell you how I'm feeling<br>
+                        Gotta make you understand</p>
+                        
+                        <p>Never gonna give you up<br>
+                        Never gonna let you down<br>
+                        Never gonna run around and desert you<br>
+                        Never gonna make you cry<br>
+                        Never gonna say goodbye<br>
+                        Never gonna tell a lie and hurt you</p>
+                        
+                        <p>We've known each other for so long<br>
+                        Your heart's been aching but you're too shy to say it<br>
+                        Inside we both know what's been going on<br>
+                        We know the game and we're gonna play it</p>
+                        
+                        <p>And if you ask me how I'm feeling<br>
+                        Don't tell me you're too blind to see</p>
+                        
+                        <p>Never gonna give you up<br>
+                        Never gonna let you down<br>
+                        Never gonna run around and desert you<br>
+                        Never gonna make you cry<br>
+                        Never gonna say goodbye<br>
+                        Never gonna tell a lie and hurt you</p>
+                        
+                        <p>(Ooh, give you up)<br>
+                        (Ooh, give you up)<br>
+                        (Ooh) Never gonna give, never gonna give<br>
+                        (Give you up)<br>
+                        (Ooh) Never gonna give, never gonna give<br>
+                        (Give you up)</p>
+                        
+                        <p>We've known each other for so long<br>
+                        Your heart's been aching but you're too shy to say it<br>
+                        Inside we both know what's been going on<br>
+                        We know the game and we're gonna play it</p>
+                        
+                        <p>I just wanna tell you how I'm feeling<br>
+                        Gotta make you understand</p>
+                        
+                        <p>Never gonna give you up<br>
+                        Never gonna let you down<br>
+                        Never gonna run around and desert you<br>
+                        Never gonna make you cry<br>
+                        Never gonna say goodbye<br>
+                        Never gonna tell a lie and hurt you</p>
+                    </div>
+                </div>
+                
+                <div role="tabpanel" id="tabpanel-3" class="tab-content" aria-label="Form submissions table with user responses">
+                    <h3 tabindex="0" id="tab3-heading">Form Submissions</h3>
+                    <p role="text" tabindex="0" aria-label="Description: User responses from the Pokemon trainer registration form">User responses from the Pokemon trainer registration form:</p>
+                    <div class="submissions-table-container">
+                        <table id="submissions-table" class="submissions-table" role="table" aria-label="Pokemon trainer registration submissions">
+                            <thead>
+                                <tr role="row">
+                                    <th role="columnheader" scope="col">Name</th>
+                                    <th role="columnheader" scope="col">Favorite Pokemon</th>
+                                    <th role="columnheader" scope="col">Submitted</th>
+                                    <th role="columnheader" scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="submissions-tbody" role="rowgroup">
+                                <tr role="row">
+                                    <td colspan="4" class="no-submissions" role="cell">No submissions yet</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal Trigger Button -->
+        <section class="modal-section" aria-label="Interactive buttons section">
+            <h2 tabindex="0" id="buttons-heading" class="sr-only">Interactive Buttons</h2>
+            <button id="sad-trombone-button" class="modal-button" aria-label="Another button - Plays audio sound when clicked">
+                Another button
+            </button>
+            <button id="modal-trigger" class="modal-button" aria-haspopup="dialog" aria-label="Button - Opens Pokemon trainer registration form">
+                Button
+            </button>
+        </section>
+    </main>
+
+    <!-- Modal -->
+    <div id="pokemon-modal" class="modal" role="dialog" aria-labelledby="modal-title" aria-describedby="modal-description" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title" tabindex="0">CHOOSE YOUR POKEMON</h2>
+                <button class="close-button" aria-label="Close Pokemon choice form">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-description" class="sr-only">Pokemon choice form with fields for name and favorite Pokemon selection</p>
+                <form id="trainer-form" class="trainer-form" aria-label="Pokemon choice form">
+                    <div class="form-group">
+                        <label for="first-name">First Name:</label>
+                        <input type="text" id="first-name" name="firstName" required aria-describedby="first-name-help">
+                        <div id="first-name-help" class="help-text">Enter your first name</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="last-name">Last Name:</label>
+                        <input type="text" id="last-name" name="lastName" required aria-describedby="last-name-help">
+                        <div id="last-name-help" class="help-text">Enter your last name</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="favorite-pokemon">Favourite Pokemon:</label>
+                        <select id="favorite-pokemon" name="favoritePokemon" required aria-describedby="pokemon-help">
+                            <option value="">Select your favorite Pokemon</option>
+                            <option value="pikachu">Pikachu</option>
+                            <option value="charizard">Charizard</option>
+                            <option value="mewtwo">Mewtwo</option>
+                            <option value="blastoise">Blastoise</option>
+                            <option value="venusaur">Venusaur</option>
+                            <option value="dragonite">Dragonite</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <div id="pokemon-help" class="help-text">Choose your favorite Pokemon from the list</div>
+                    </div>
+                    
+                    <div class="form-group" id="other-pokemon-group" style="display: none;">
+                        <label for="other-pokemon">Please specify your favorite Pokemon:</label>
+                        <input type="text" id="other-pokemon" name="otherPokemon" aria-describedby="other-pokemon-help">
+                        <div id="other-pokemon-help" class="help-text">Enter the name of your favorite Pokemon</div>
+                    </div>
+                    
+                    <div class="form-actions" role="group" aria-label="Form action buttons">
+                        <button type="submit" class="submit-button" aria-label="Submit Pokemon choice form">Submit</button>
+                        <button type="button" class="cancel-button" aria-label="Cancel and close Pokemon choice form">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer role="contentinfo" aria-label="Site footer with social links and copyright information">
+        <div class="footer-content">
+            <h3 tabindex="0" id="footer-heading" aria-label="Footer heading: This is a footer. Issues here might be repeated across an entire site.">This is a footer. Issues here might be repeated across an entire site.</h3>
+            <div class="social-links" role="list" aria-label="Footer: Pokemon community social media links">
+                <a href="https://www.pokemon.com" target="_blank" rel="noopener noreferrer" aria-label="Footer link: Official Pokemon Website - Opens in new tab" role="listitem">
+                    Official Pokemon
+                </a>
+                <a href="https://bulbapedia.bulbagarden.net" target="_blank" rel="noopener noreferrer" aria-label="Footer link: Bulbapedia Pokemon Encyclopedia - Opens in new tab" tabindex="3" role="listitem">
+                    Bulbapedia
+                </a>
+                <a href="https://www.serebii.net" target="_blank" rel="noopener noreferrer" aria-label="Footer link: Serebii Pokemon Database - Opens in new tab" role="listitem">
+                    Serebii
+                </a>
+            </div>
+            <p class="footer-text" aria-label="Footer copyright text: 2024 Evinced Screenreader Test Site. All Pokemon content is property of Nintendo/Game Freak.">&copy; 2024 Evinced Screenreader Test Site. All Pokemon content is property of Nintendo/Game Freak.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

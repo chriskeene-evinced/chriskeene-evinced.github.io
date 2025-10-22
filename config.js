@@ -4,11 +4,11 @@
 
 window.GITHUB_CONFIG = {
     // Replace with your actual repository (format: username/repository-name)
-    REPO: 'your-username/your-repo-name',
+    REPO: 'chriskeene-evinced/chriskeene-evinced.github.io',
     
     // Replace with your GitHub Personal Access Token
     // For GitHub Pages, you can use GitHub Secrets
-    TOKEN: 'your-github-token',
+    TOKEN: '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',
     
     // The data file name in your repository
     DATA_FILE: 'submissions.json'

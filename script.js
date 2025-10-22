@@ -525,6 +525,174 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Function to add form submission to the table
+    // GitHub API configuration - uses config.js
+    const GITHUB_REPO = window.GITHUB_CONFIG?.REPO || 'your-username/your-repo-name';
+    const GITHUB_TOKEN = window.GITHUB_CONFIG?.TOKEN || 'your-github-token';
+    const DATA_FILE = window.GITHUB_CONFIG?.DATA_FILE || 'submissions.json';
+    
+    // Function to save submissions to GitHub
+    async function saveSubmissionsToGitHub() {
+        // Check if GitHub integration is properly configured
+        if (GITHUB_REPO === 'your-username/your-repo-name' || GITHUB_TOKEN === 'your-github-token') {
+            console.warn('GitHub integration not configured. Using localStorage fallback.');
+            saveSubmissionsToStorage();
+            return;
+        }
+        
+        const submissions = [];
+        const tbody = document.getElementById('submissions-tbody');
+        const rows = tbody.querySelectorAll('tr:not(.no-submissions)');
+        
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            if (cells.length >= 3) {
+                submissions.push({
+                    name: cells[0].textContent,
+                    pokemon: cells[1].textContent,
+                    timestamp: cells[2].textContent
+                });
+            }
+        });
+        
+        try {
+            // Get current file content to get SHA
+            const getResponse = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${DATA_FILE}`, {
+                headers: {
+                    'Authorization': `token ${GITHUB_TOKEN}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            });
+            
+            let sha = null;
+            if (getResponse.ok) {
+                const fileData = await getResponse.json();
+                sha = fileData.sha;
+            }
+            
+            // Create or update the file
+            const content = btoa(JSON.stringify(submissions, null, 2));
+            const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${DATA_FILE}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${GITHUB_TOKEN}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: 'Update submissions data',
+                    content: content,
+                    sha: sha
+                })
+            });
+            
+            if (!response.ok) {
+                console.error('Failed to save to GitHub:', await response.text());
+                // Fallback to localStorage
+                saveSubmissionsToStorage();
+            } else {
+                console.log('Successfully saved submissions to GitHub');
+            }
+        } catch (error) {
+            console.error('Error saving to GitHub:', error);
+            // Fallback to localStorage
+            saveSubmissionsToStorage();
+        }
+    }
+    
+    // Function to save submissions to localStorage (fallback)
+    function saveSubmissionsToStorage() {
+        const submissions = [];
+        const tbody = document.getElementById('submissions-tbody');
+        const rows = tbody.querySelectorAll('tr:not(.no-submissions)');
+        
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            if (cells.length >= 3) {
+                submissions.push({
+                    name: cells[0].textContent,
+                    pokemon: cells[1].textContent,
+                    timestamp: cells[2].textContent
+                });
+            }
+        });
+        
+        localStorage.setItem('pokemonSubmissions', JSON.stringify(submissions));
+    }
+    
+    // Function to load submissions from GitHub
+    async function loadSubmissionsFromGitHub() {
+        // Check if GitHub integration is properly configured
+        if (GITHUB_REPO === 'your-username/your-repo-name' || GITHUB_TOKEN === 'your-github-token') {
+            console.warn('GitHub integration not configured. Using localStorage fallback.');
+            loadSubmissionsFromStorage();
+            return;
+        }
+        
+        try {
+            const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${DATA_FILE}`, {
+                headers: {
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            });
+            
+            if (response.ok) {
+                const fileData = await response.json();
+                const submissions = JSON.parse(atob(fileData.content));
+                displaySubmissions(submissions);
+                console.log('Successfully loaded submissions from GitHub');
+            } else {
+                console.warn('Failed to load from GitHub, using localStorage fallback');
+                // Fallback to localStorage
+                loadSubmissionsFromStorage();
+            }
+        } catch (error) {
+            console.error('Error loading from GitHub:', error);
+            // Fallback to localStorage
+            loadSubmissionsFromStorage();
+        }
+    }
+    
+    // Function to display submissions in the table
+    function displaySubmissions(submissions) {
+        const tbody = document.getElementById('submissions-tbody');
+        
+        // Clear existing content
+        tbody.innerHTML = '';
+        
+        if (submissions.length > 0) {
+            submissions.forEach(submission => {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${submission.name}</td>
+                    <td>${submission.pokemon}</td>
+                    <td>${submission.timestamp}</td>
+                    <td>
+                        <button class="delete-button" onclick="deleteSubmission(this)" aria-label="Delete submission for ${submission.name}">
+                            🗑️ Delete
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(newRow);
+            });
+        } else {
+            // Add "No submissions yet" row if no submissions
+            const noSubmissionsRow = document.createElement('tr');
+            noSubmissionsRow.innerHTML = '<td colspan="4" class="no-submissions" role="cell">No submissions yet</td>';
+            tbody.appendChild(noSubmissionsRow);
+        }
+    }
+    
+    // Fallback function to load from localStorage
+    function loadSubmissionsFromStorage() {
+        const savedSubmissions = localStorage.getItem('pokemonSubmissions');
+        if (savedSubmissions) {
+            const submissions = JSON.parse(savedSubmissions);
+            displaySubmissions(submissions);
+        } else {
+            displaySubmissions([]);
+        }
+    }
+    
     function addSubmissionToTable(firstName, lastName, favoritePokemon) {
         const tbody = document.getElementById('submissions-tbody');
         const timestamp = new Date().toLocaleString();
@@ -551,6 +719,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add row to the beginning of the table
         tbody.insertBefore(newRow, tbody.firstChild);
         
+        // Save to GitHub
+        saveSubmissionsToGitHub();
+        
         // Announce to screen readers
         announceToScreenReader(`New submission added: ${firstName} ${lastName} chose ${favoritePokemon}`);
     }
@@ -572,6 +743,9 @@ document.addEventListener('DOMContentLoaded', function() {
             noSubmissionsRow.innerHTML = '<td colspan="4" class="no-submissions">No submissions yet</td>';
             tbody.appendChild(noSubmissionsRow);
         }
+        
+        // Save to GitHub after deletion
+        saveSubmissionsToGitHub();
         
         // Announce deletion to screen readers
         announceToScreenReader(`Submission deleted: ${name} - ${pokemon}`);
@@ -599,6 +773,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 e.preventDefault();
                 const label = this.getAttribute('aria-label') || this.textContent.trim();
                 announceToScreenReader(`Activated: ${label}`);
+            }
+        });
+    });
+    
+    // Add event listeners for Rick Astley lyrics elements
+    const lyricsElements = document.querySelectorAll('#song-title, #song-artist, #verse-1, #verse-2, #verse-3, #pre-chorus-1, #pre-chorus-2, #chorus-1, #chorus-2, #chorus-3, #bridge, #ad-lib');
+    
+    lyricsElements.forEach(element => {
+        // Focus event - announce content to screen readers
+        element.addEventListener('focus', function() {
+            const label = this.getAttribute('aria-label') || this.textContent.trim();
+            announceToScreenReader(`Song element focused: ${label}`);
+        });
+        
+        // Click event - announce activation
+        element.addEventListener('click', function() {
+            const label = this.getAttribute('aria-label') || this.textContent.trim();
+            announceToScreenReader(`Song element activated: ${label}`);
+        });
+        
+        // Keydown event - handle Enter and Space
+        element.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const label = this.getAttribute('aria-label') || this.textContent.trim();
+                announceToScreenReader(`Song element activated: ${label}`);
             }
         });
     });
@@ -630,4 +830,7 @@ document.addEventListener('DOMContentLoaded', function() {
             announceToScreenReader(`Footer text activated: ${label}`);
         });
     }
+    
+    // Load submissions from GitHub when page loads
+    loadSubmissionsFromGitHub();
 });

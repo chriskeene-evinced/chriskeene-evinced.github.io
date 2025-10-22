@@ -526,8 +526,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Function to add form submission to the table
     // GitHub API configuration - uses config.js
-    const GITHUB_REPO = window.GITHUB_CONFIG?.REPO || 'your-username/your-repo-name';
-    const GITHUB_TOKEN = window.GITHUB_CONFIG?.TOKEN || 'your-github-token';
+    const GITHUB_REPO = window.GITHUB_CONFIG?.REPO || 'chriskeene-evinced/chriskeene-evinced.github.io';
+    const GITHUB_TOKEN = window.GITHUB_CONFIG?.TOKEN || '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';
     const DATA_FILE = window.GITHUB_CONFIG?.DATA_FILE || 'submissions.json';
     
     // Function to save submissions to GitHub
